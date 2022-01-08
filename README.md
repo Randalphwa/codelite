@@ -1,8 +1,3 @@
-[![Build-macOS-latest Actions Status](https://github.com/eranif/codelite/workflows/build-macos-latest/badge.svg)](https://github.com/eranif/codelite/actions)
-[![Build-Ubuntu-latest Actions Status](https://github.com/eranif/codelite/workflows/build-ubuntu-latest/badge.svg)](https://github.com/eranif/codelite/actions)
-[![Join the chat at https://gitter.im/eranif/codelite](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/eranif/codelite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-
 What is CodeLite?
 ====
 
@@ -31,3 +26,7 @@ Building and installation
   [9]: https://docs.codelite.org/build/build_from_sources/#windows
   [10]: https://docs.codelite.org/build/build_from_sources/#linux
   [11]: https://docs.codelite.org/build/build_from_sources/#macos
+
+# _Fork Notes_
+
+This fork is built as if wxSnapshot had been added as a sub-module. It's not actually added so if you want to build from this fork, you will need to a) clone the wxSnapshot directory somewhere and b) create a symbolic link in the root of this repository that points to your own version of wxSnapshot. Currently, the only portion of this fork that uses this is the wxcrafter folder.
