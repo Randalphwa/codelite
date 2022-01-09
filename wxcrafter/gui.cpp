@@ -6,6 +6,9 @@
 
 #include "gui.h"
 
+#include <wx/persist/splitter.h>  // persistence support for wxTLW
+#include <wx/persist/toplevel.h>  // persistence support for wxTLW
+
 // Declare the bitmap loading function
 extern void wxC2AC4InitBitmapResources();
 
@@ -54,6 +57,7 @@ MainFrameBase::MainFrameBase(wxWindow* parent, wxWindowID id, const wxString& ti
     m_splitterPageDesigner = new wxPanel(m_splitterMain, wxID_ANY, wxDefaultPosition,
                                          wxDLG_UNIT(m_splitterMain, wxSize(-1, -1)), wxTAB_TRAVERSAL);
     m_splitterMain->SplitVertically(m_splitterPageTreeView, m_splitterPageDesigner, 150);
+    wxPersistenceManager::Get().RegisterAndRestore(m_splitterMain);
 
     wxBoxSizer* boxSizer299 = new wxBoxSizer(wxVERTICAL);
     m_splitterPageDesigner->SetSizer(boxSizer299);
@@ -198,14 +202,13 @@ MainFrameBase::MainFrameBase(wxWindow* parent, wxWindowID id, const wxString& ti
     if(GetParent()) {
         CentreOnParent(wxHORIZONTAL);
     } else {
+// [Randalph - 01-08-2022] Don't center if using wxPersistentRegisterAndRestore
+#if wxVERSION_NUMBER < 2900
         CentreOnScreen(wxHORIZONTAL);
+#endif
     }
 #if wxVERSION_NUMBER >= 2900
-    if(!wxPersistenceManager::Get().Find(this)) {
-        wxPersistenceManager::Get().RegisterAndRestore(this);
-    } else {
-        wxPersistenceManager::Get().Restore(this);
-    }
+    wxPersistentRegisterAndRestore(this, "MainFrame");
 #endif
     // Connect events
     this->Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrameBase::OnCloseFrame), NULL, this);
