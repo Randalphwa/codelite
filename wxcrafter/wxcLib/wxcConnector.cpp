@@ -1,10 +1,11 @@
 #include "wxcConnector.h"
 #include <wx/utils.h>
-#include "wxcLib/clSocketClient.h"
-#include "wxcLib/wxcLibDefines.h"
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+#include "clSocketClient.h"
+#include "wxcLibDefines.h"
 #include <wx/socket.h>
-#include "wxcLib/wxcNetworkReplyThread.h"
-#include "wxcLib/wxcReplyEventData.h"
+#include "wxcNetworkReplyThread.h"
+#include "wxcReplyEventData.h"
 #include <wx/msgdlg.h>
 
 const int ID_WXC_PROCESS = ::wxNewId();
@@ -38,7 +39,7 @@ wxcConnector::~wxcConnector()
     Shutdown();
 }
 
-void wxcConnector::DoLaunchAndConnect() 
+void wxcConnector::DoLaunchAndConnect()
 {
     m_wxcrafterProcess = new wxProcess(this, ID_WXC_PROCESS);
     long pid = ::wxExecute(m_wxcrafterExecCommand, wxEXEC_ASYNC, m_wxcrafterProcess);
@@ -79,7 +80,7 @@ void wxcConnector::DoLaunchAndConnect()
     }
 }
 
-void wxcConnector::LaunchAndConnect(const wxString& wxcPath) 
+void wxcConnector::LaunchAndConnect(const wxString& wxcPath)
 {
     wxString command;
     command << wxcPath;
@@ -91,7 +92,7 @@ void wxcConnector::LaunchAndConnect(const wxString& wxcPath)
     DoLaunchAndConnect();
 }
 
-void wxcConnector::SendCommand(const wxcNetworkCommand& command) 
+void wxcConnector::SendCommand(const wxcNetworkCommand& command)
 {
     if ( !m_socket ) {
         throw clSocketException(wxT("socket not connected!"));
@@ -105,7 +106,7 @@ void wxcConnector::SendCommand(const wxcNetworkCommand& command)
 void wxcConnector::OnProcessTerminated(wxProcessEvent& event)
 {
     wxUnusedVar( event );
-    
+
     // Call shutdown to perform cleanup
     Shutdown();
 }
@@ -131,7 +132,7 @@ void wxcConnector::Shutdown()
     m_wxcrafterProcess = NULL;
 }
 
-void wxcConnector::LoadFile(const wxFileName& filename) 
+void wxcConnector::LoadFile(const wxFileName& filename)
 {
     wxcNetworkCommand command;
     command.SetCommandType( wxCrafter::kCommandTypeLoadFile );
@@ -155,7 +156,7 @@ void wxcConnector::OnFilesGenerated(wxCommandEvent& event)
     }
 }
 
-void wxcConnector::GenerateCode(const wxFileName& wxcpFileName) 
+void wxcConnector::GenerateCode(const wxFileName& wxcpFileName)
 {
     wxcNetworkCommand command;
     command.SetCommandType( wxCrafter::kCommandTypeGenerateCode );

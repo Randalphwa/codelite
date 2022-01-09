@@ -86,9 +86,10 @@ void EventsTableListView::Save()
         }
 
         // Out of politeness, tell our control; it might even be interested e.g. dropdown tools
-        wxCommandEvent evt(wxEVT_EVENTS_PROPERTIES_UPDATED);
-        evt.SetString(event);
-        EventNotifier::Get()->AddPendingEvent(evt);
+        // [Randalph - 01-08-2022] Undefined, but not sure why
+        // wxCommandEvent evt(wxEVT_EVENTS_PROPERTIES_UPDATED);
+        // evt.SetString(event);
+        // EventNotifier::Get()->AddPendingEvent(evt);
     }
 }
 

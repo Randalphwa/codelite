@@ -41,7 +41,11 @@
 #ifdef __cplusplus
 
 #include <stdlib.h>
+
+// [Randalph - 01-08-2022]
+#ifndef WIN32
 #include <unistd.h>
+#endif
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS
@@ -2588,7 +2592,7 @@ char msg[];
 #endif
 	{
 	(void) fprintf( stderr, "%s\n", msg );
-	
+
 	}
 
 

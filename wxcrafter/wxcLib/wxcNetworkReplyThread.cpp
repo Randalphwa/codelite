@@ -1,6 +1,7 @@
 #include "wxcNetworkReplyThread.h"
-#include "wxcLib/wxcReplyEventData.h"
-#include "wxcLib/wxcNetworkReply.h"
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+#include "wxcReplyEventData.h"
+#include "wxcNetworkReply.h"
 
 wxcNetworkReplyThread::wxcNetworkReplyThread(wxEvtHandler *parent, socket_t sock)
     : wxThread(wxTHREAD_JOINABLE)
@@ -24,7 +25,7 @@ void* wxcNetworkReplyThread::Entry()
                 switch ( reply.GetReplyType() ) {
                 case wxCrafter::kReplyTypeFilesGenerated: {
                     if ( m_parent ) {
-                        
+
                         // File generation completed
                         wxcReplyEventData *data = new wxcReplyEventData;
                         data->SetFiles( reply.GetFiles() );
@@ -32,7 +33,7 @@ void* wxcNetworkReplyThread::Entry()
                         wxCommandEvent event(wxcEVT_NET_REPLY_FILES_GENERATED);
                         event.SetClientObject( data );
                         m_parent->AddPendingEvent( event );
-                        
+
                     }
                 }
                 break;

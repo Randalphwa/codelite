@@ -80,7 +80,9 @@ public:
     /**
      * @brief return the default editor font (monospaced)
      */
-    wxFont GetFixedFont(bool small = false) const;
+    // [Randalph - 01-08-2022] 'small' is #defined as char, so you can't use it here as a parameter
+    // wxFont GetFixedFont(bool small = false) const;
+    wxFont GetFixedFont(bool small_type = false) const;
     /**
      * @brief return a suitable background colour that matches the lexer's bg colour
      */

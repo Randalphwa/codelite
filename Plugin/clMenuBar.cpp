@@ -496,6 +496,8 @@ void clMenuBar::UpdateAccelerators()
         }
     }
 
+#if 0
+    // [Randalph - 01-08-2022] No idea how this ever compiled, because you can't create an array with a non-const value.
     wxAcceleratorEntry entries[accels.size()];
     for(size_t i = 0; i < accels.size(); ++i) {
         entries[i] = *accels[i];
@@ -504,6 +506,7 @@ void clMenuBar::UpdateAccelerators()
 
     wxAcceleratorTable table(accels.size(), entries);
     GetParent()->SetAcceleratorTable(table);
+#endif
 }
 
 void clMenuBar::FromMenuBar(wxMenuBar* mb)

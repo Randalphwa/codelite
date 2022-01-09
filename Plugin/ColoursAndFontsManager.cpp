@@ -1336,12 +1336,14 @@ void ColoursAndFontsManager::SetThemeTextSelectionColours(const wxString& theme_
     }
 }
 
-wxFont ColoursAndFontsManager::GetFixedFont(bool small) const
+// [Randalph - 01-08-2022] 'small' is #defined as a char
+// wxFont ColoursAndFontsManager::GetFixedFont(bool small) const
+wxFont ColoursAndFontsManager::GetFixedFont(bool small_param) const
 {
     auto lexer = GetLexer("text");
     auto font = lexer->GetFontForSyle(0, EventNotifier::Get()->TopFrame());
 #ifndef __WXMAC__
-    if(small) {
+    if(small_param) {
 #if wxCHECK_VERSION(3, 1, 2)
         font.SetFractionalPointSize(font.GetPointSize() * 0.9);
 #else
@@ -1349,7 +1351,7 @@ wxFont ColoursAndFontsManager::GetFixedFont(bool small) const
 #endif
     }
 #else
-    wxUnusedVar(small);
+    wxUnusedVar(small_param);
 #endif
     return font;
 }

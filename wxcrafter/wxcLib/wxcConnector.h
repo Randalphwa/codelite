@@ -3,8 +3,10 @@
 
 #include <wx/event.h>
 #include <wx/process.h>
-#include "wxcLib/clSocketBase.h"
-#include "wxcLib/wxcNetworkCommand.h"
+
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+#include "clSocketBase.h"
+#include "wxcNetworkCommand.h"
 
 
 class wxcNetworkReplyThread;
@@ -14,19 +16,19 @@ class wxcConnector : public wxEvtHandler
     wxProcess*              m_wxcrafterProcess;
     wxString                m_wxcrafterExecCommand;
     wxcNetworkReplyThread*  m_networkThread;
-    
+
 protected:
     DECLARE_EVENT_TABLE()
     void OnProcessTerminated(wxProcessEvent& event);
     void OnFilesGenerated(wxCommandEvent& event);
-    
+
 private:
     void DoLaunchAndConnect() ;
-    
+
 public:
     wxcConnector();
     virtual ~wxcConnector();
-    
+
     /**
      * @brief return true if this instance is connected to wxCrafter
      */
@@ -35,7 +37,7 @@ public:
      * @brief shutdown wxCrafter and perform cleanup
      */
     void Shutdown();
-    
+
     /**
      * @brief launch wxCrafter in server-mode
      * @param wxcPath wxCrafter executable path
@@ -49,19 +51,19 @@ public:
      * @throw clSocketException
      */
     void SendCommand(const wxcNetworkCommand& command) ;
-    
+
     /**
      * @brief load a wxCrafter file into wxCrafter and show the designer (if not shown)
      * @param filename full path the file to load
      */
     void LoadFile( const wxFileName& filename ) ;
-    
+
     /**
      * @brief generate code for the wxcp file
      * @param wxcpFileName
      */
     void GenerateCode( const wxFileName& wxcpFileName) ;
-    
+
     /**
      * @brief create new form
      * @param wxcpFileName

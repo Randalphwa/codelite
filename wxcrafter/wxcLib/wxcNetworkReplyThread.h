@@ -2,7 +2,8 @@
 #define WXCNETWORKREPLYTHREAD_H
 
 #include <wx/thread.h>
-#include "wxcLib/clSocketBase.h"
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+#include "clSocketBase.h"
 #include <wx/event.h>
 
 class wxcNetworkReplyThread : public wxThread
@@ -15,7 +16,7 @@ public:
 
 public:
     virtual void* Entry();
-    
+
     void Stop() {
 #if wxCHECK_VERSION(3, 0, 0)
         if ( IsAlive() ) {
@@ -27,7 +28,7 @@ public:
         Delete();
 #endif
     }
-    
+
     void Start() {
         Create();
         Run();

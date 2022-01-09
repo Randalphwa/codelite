@@ -1,8 +1,9 @@
 #ifndef WXCNETWORKCOMMAND_H
 #define WXCNETWORKCOMMAND_H
 
-#include "wxcLib/wxcEnums.h"
-#include "wxcLib/json_node.h"
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+#include "wxcEnums.h"
+#include "json_node.h"
 
 class wxcNetworkCommand
 {
@@ -13,7 +14,7 @@ public:
     wxcNetworkCommand();
     wxcNetworkCommand(const wxString& json);
     virtual ~wxcNetworkCommand();
-    
+
     void SetCommandType(const wxCrafter::eCommandType& commandType) {
         this->m_commandType = commandType;
     }

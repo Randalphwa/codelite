@@ -1,7 +1,8 @@
 #ifndef CLSOCKETSERVER_H
 #define CLSOCKETSERVER_H
 
-#include "wxcLib/clSocketBase.h"
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+#include "clSocketBase.h"
 
 class clSocketServer : public clSocketBase
 {

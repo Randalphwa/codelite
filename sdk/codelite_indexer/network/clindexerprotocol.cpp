@@ -98,6 +98,11 @@ bool clIndexerProtocol::ReadReply(clNamedPipe* conn, clIndexerReply& reply, std:
     return true;
 }
 
+// [Randalph - 01-08-2022]
+#ifdef _MSC_VER
+    #define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 bool clIndexerProtocol::ReadRequest(clNamedPipe* conn, clIndexerRequest& req)
 {
     // first we read sizeof(size_t) to get the actual data size

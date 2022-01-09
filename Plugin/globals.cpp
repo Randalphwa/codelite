@@ -1002,7 +1002,10 @@ void GetProjectTemplateList(std::list<ProjectPtr>& list)
     list.sort(ProjListCompartor());
 }
 
-thread_local std::unordered_set<wxString> words;
+// [Randalph - 01-08-2022]
+#ifdef STANDALONE_BUILD
+extern thread_local std::unordered_set<wxString> words;
+#endif
 
 bool IsCppKeyword(const wxString& word)
 {

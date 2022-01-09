@@ -66,7 +66,11 @@
 #ifdef __cplusplus
 
 #include <stdlib.h>
+
+// [Randalph - 01-08-2022]
+#ifndef WIN32
 #include <unistd.h>
+#endif
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS
@@ -713,7 +717,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 {
-	/* if we kept some C++ comment, it is time to flush it to the 
+	/* if we kept some C++ comment, it is time to flush it to the
 	 * result output */
 	if(strCppComment.empty() == false && pResults) {
 		pResults->addComment(strCppComment, iCppCommentLine, false);
@@ -727,7 +731,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 {
-	/* if we kept some C++ comment, it is time to flush it to the 
+	/* if we kept some C++ comment, it is time to flush it to the
 	 * result output */
 	if(strCppComment.empty() == false && pResults) {
 		pResults->addComment(strCppComment, iCppCommentLine, false);
@@ -745,7 +749,7 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 {
-	/* if we kept some C++ comment, it is time to flush it to the 
+	/* if we kept some C++ comment, it is time to flush it to the
 	 * result output */
 	if(strCppComment.empty() == false && pResults) {
 		pResults->addComment(strCppComment, iCppCommentLine, false);
@@ -757,7 +761,7 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 {
-	/* if we kept some C++ comment, it is time to flush it to the 
+	/* if we kept some C++ comment, it is time to flush it to the
 	 * result output */
 	if(strCppComment.empty() == false && pResults) {
 		pResults->addComment(strCppComment, iCppCommentLine, false);
@@ -793,7 +797,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-{ 
+{
 	if(strComment.empty() == false) {
 		if(strComment.at(strComment.length() -1) == '\n'){
 			// dont add indentation tabs
@@ -837,7 +841,7 @@ case YY_STATE_EOF(cpp_comment):
 		strCppComment.clear();
 		iCppCommentLine = -1;
 	}
-	
+
 	if ( YY_CURRENT_BUFFER->yy_input_file ) {
 		fclose( YY_CURRENT_BUFFER->yy_input_file );
 		YY_CURRENT_BUFFER->yy_input_file = NULL;
@@ -1631,7 +1635,7 @@ char msg[];
 #endif
 	{
 	(void) fprintf( stderr, "%s\n", msg );
-	
+
 	}
 
 
@@ -1752,7 +1756,7 @@ int ParseComments(const char* filePath, CommentParseResult &comments)
 	strComment.clear();
 	strCppComment.clear();
 	iCppCommentLine = -1;
-	
+
 	yy_switch_to_buffer( yy_create_buffer(fp, YY_BUF_SIZE) );
 	cp_in = fp;
 	int rc = cp_lex();
@@ -1765,4 +1769,3 @@ int ParseComments(const char* filePath, CommentParseResult &comments)
 	iCppCommentLine = -1;
 	return rc;
 }
-

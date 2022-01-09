@@ -1,8 +1,10 @@
 #ifndef WXCNETWORKREPLY_H
 #define WXCNETWORKREPLY_H
 
-#include "wxcLib/wxcEnums.h"
-#include "wxcLib/json_node.h"
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+
+#include "wxcEnums.h"
+#include "json_node.h"
 #include <wx/filename.h>
 #include <vector>
 

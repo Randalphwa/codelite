@@ -25,7 +25,11 @@
 
 #include "file_logger.h"
 #include "cl_standard_paths.h"
+#ifdef WIN32
+#include <time.h>
+#else
 #include <sys/time.h>
+#endif
 #include <wx/crt.h>
 #include <wx/filename.h>
 #include <wx/log.h>
@@ -149,13 +153,20 @@ void FileLogger::Flush()
     m_buffer.Clear();
 }
 
+// [Randalph - 01-08-2022] Switched to std:: version which works on all platforms
+#include <chrono>
+#include <ctime>
+
 wxString FileLogger::Prefix(int verbosity)
 {
     if(verbosity <= m_verbosity) {
         wxString prefix;
-        timeval tim;
-        gettimeofday(&tim, NULL);
-        int ms = (int)tim.tv_usec / 1000.0;
+
+        // timeval tim;
+        // gettimeofday(&tim, NULL);
+        // int ms = (int)tim.tv_usec / 1000.0;
+        const std::time_t t_c = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        int ms = static_cast<int>(t_c)  / 1000.0;
 
         wxString msStr = wxString::Format(wxT("%03d"), ms);
         prefix << wxT("[") << wxDateTime::Now().FormatISOTime() << wxT(":") << msStr;

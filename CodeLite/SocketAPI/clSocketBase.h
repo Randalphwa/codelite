@@ -27,7 +27,10 @@
 #define CLSOCKETBASE_H
 
 #include <string>
+// [Randalph - 01-08-2022] sys/param.h is a unix file, and doesn't exist in Windows
+#ifndef WIN32
 #include <sys/param.h>
+#endif
 #include <wx/msgqueue.h>
 #include <wx/sharedptr.h>
 #include <wx/string.h>

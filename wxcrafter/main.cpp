@@ -50,7 +50,8 @@ static const wxCmdLineEntryDesc cmdLineDesc[] = {
 IMPLEMENT_APP(wxcApp)
 
 #ifdef __WXMSW__
-typedef BOOL WINAPI (*SetProcessDPIAwareFunc)();
+// [Randalph - 01-08-2022] 'SetProcessDPIAwareFunc' is undefined. Would make more sense under Windows to use a manifest file
+// typedef BOOL WINAPI (*SetProcessDPIAwareFunc)();
 #endif
 
 wxcApp::wxcApp()
@@ -107,6 +108,8 @@ bool wxcApp::OnInit()
     EditorConfigST::Get()->SetInstallDir(wxString() << INSTALL_PREFIX << "/share/wxcrafter");
 
 #elif defined(__WXMSW__)
+// [Randalph - 01-08-2022] 'SetProcessDPIAwareFunc' is undefined. Would make more sense under Windows to use a manifest file
+#if 0
     HINSTANCE m_user32Dll = LoadLibrary(L"User32.dll");
     if(m_user32Dll) {
         SetProcessDPIAwareFunc pFunc = (SetProcessDPIAwareFunc)GetProcAddress(m_user32Dll, "SetProcessDPIAware");
@@ -116,7 +119,7 @@ bool wxcApp::OnInit()
         FreeLibrary(m_user32Dll);
         m_user32Dll = NULL;
     }
-
+#endif
     EditorConfigST::Get()->SetInstallDir(wxFileName(wxStandardPaths::Get().GetExecutablePath()).GetPath());
 #endif
     EditorConfigST::Get()->Init("", "2.0.2");

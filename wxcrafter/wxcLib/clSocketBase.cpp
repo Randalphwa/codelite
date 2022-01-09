@@ -1,4 +1,5 @@
-#include "wxcLib/clSocketBase.h"
+// [Randalph - 01-08-2022] removed the wxcLib/ prefix since they are in the same directory
+#include "clSocketBase.h"
 #include <cerrno>
 #include <cstdio>
 
@@ -29,7 +30,7 @@ void clSocketBase::Initialize()
 #endif
 }
 
-int clSocketBase::Read(char* buffer, size_t bufferSize, size_t& bytesRead, long timeout) 
+int clSocketBase::Read(char* buffer, size_t bufferSize, size_t& bytesRead, long timeout)
 {
     if ( SelectRead(timeout) == kTimeout ) {
         return kTimeout;
@@ -39,7 +40,7 @@ int clSocketBase::Read(char* buffer, size_t bufferSize, size_t& bytesRead, long 
     return kSuccess;
 }
 
-int clSocketBase::SelectRead(long seconds) 
+int clSocketBase::SelectRead(long seconds)
 {
     if ( seconds == -1 ) {
         return kSuccess;
@@ -69,7 +70,7 @@ int clSocketBase::SelectRead(long seconds)
     }
 }
 
-void clSocketBase::Send(const std::string& msg) 
+void clSocketBase::Send(const std::string& msg)
 {
     if ( m_socket == INVALID_SOCKET ) {
         throw clSocketException(wxT("Invalid socket!"));
@@ -106,7 +107,7 @@ void clSocketBase::DestroySocket()
     m_socket = INVALID_SOCKET;
 }
 
-int clSocketBase::ReadMessage(wxString& message, int timeout) 
+int clSocketBase::ReadMessage(wxString& message, int timeout)
 {
     // send the length in string form to avoid binary / arch differences between remote and local machine
     char msglen[11];
@@ -119,14 +120,14 @@ int clSocketBase::ReadMessage(wxString& message, int timeout)
         // timeout
         return rc;
     }
-    
+
     // convert the string to int
     message_len = ::atoi(msglen);
-    
+
     bytesRead = 0;
     char *buff = new char[message_len+1];
     memset(buff, 0, message_len+1);
-    
+
     // read the entire amount we need
     int bytesLeft = message_len;
     int totalRead = 0;
@@ -147,13 +148,13 @@ int clSocketBase::ReadMessage(wxString& message, int timeout)
             bytesRead = 0;
         }
     }
-    
+
     buff[message_len] = '\0';
     message = wxString(buff, wxConvUTF8);
     return kSuccess;
 }
 
-void clSocketBase::WriteMessage(const wxString& message) 
+void clSocketBase::WriteMessage(const wxString& message)
 {
     if ( m_socket == INVALID_SOCKET ) {
         throw clSocketException(wxT("Invalid socket!"));
@@ -162,7 +163,7 @@ void clSocketBase::WriteMessage(const wxString& message)
     // Write the message length
     std::string c_str = message.mb_str(wxConvUTF8).data();
     int len = c_str.length();
-    
+
     // send the length in string form to avoid binary / arch differences between remote and local machine
     char msglen[11];
     memset(msglen, 0, sizeof(msglen));
